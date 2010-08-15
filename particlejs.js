@@ -13,15 +13,48 @@ function particlejs(opts) {
 	var element_width = opts.width || 100;
 	var element_height = opts.height || 100;
 	var speed_factor = opts.speed || 1;
+	var type = 'circle';
+	if(opts.type == 'horizontal' || opts.type == 'vertical') type = opts.type;
 
 	// a single particle
 	function particle(opts){
 		var id = '#particlejs-'+opts.id;
 		var age = 0;
 		var speed = 10+Math.random()*10;
-		var angle = Math.random()*360;
-		var x = screen_width/2;
-		var y = screen_height/2;
+
+		switch(opts.type) {
+			case 'circle':
+				var angle = Math.random()*360;
+				var x = screen_width/2;
+				var y = screen_height/2;
+				break;
+			case 'horizontal':
+				if((Math.floor(Math.random()*2)) == 0) {
+					// moving left
+					var angle = 180;
+					var x = screen_width-element_width/2;
+					var y = Math.floor(Math.random()*screen_height);
+				} else {
+					// moving right
+					var angle = 0;
+					var x = element_width/2;
+					var y = Math.floor(Math.random()*screen_height);
+				}
+				break;
+			case 'vertical':
+				if((Math.floor(Math.random()*2)) == 0) {
+					// moving up
+					var angle = 270;
+					var x = Math.floor(Math.random()*screen_width);
+					var y = screen_height;
+				} else {
+					// moving down
+					var angle = 90;
+					var x = Math.floor(Math.random()*screen_width);
+					var y = 0;
+				}
+				break;
+		}
 		
 		$('body').append('<div id="particlejs-'+opts.id+'" style="display:none">'+opts.html+'</div>');
 		$(id).css('text-align', 'center');
@@ -107,6 +140,7 @@ function particlejs(opts) {
 		// create a new particle
 		new particle({
 			id: particle_count,
+			type: type,
 			width: element_width,
 			height: element_height,
 			html: html
