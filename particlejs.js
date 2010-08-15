@@ -21,14 +21,17 @@ function particlejs(opts) {
 		var id = '#particlejs-'+opts.id;
 		var age = 0;
 		var speed = 10+Math.random()*10;
+		var rotate_angle = 0;
 
 		switch(opts.type) {
 			case 'circle':
 				var angle = Math.random()*360;
+				rotate_angle = angle;
 				var x = screen_width/2;
 				var y = screen_height/2;
 				break;
 			case 'horizontal':
+				rotate_angle = 0;
 				if((Math.floor(Math.random()*2)) == 0) {
 					// moving left
 					var angle = 180;
@@ -42,6 +45,7 @@ function particlejs(opts) {
 				}
 				break;
 			case 'vertical':
+				rotate_angle = 0;
 				if((Math.floor(Math.random()*2)) == 0) {
 					// moving up
 					var angle = 270;
@@ -64,8 +68,8 @@ function particlejs(opts) {
 		$(id).css('overflow', 'hidden');
 		$(id).css('width', opts.width);
 		$(id).css('height', opts.height);
-		$(id).css('-webkit-transform', 'rotate('+angle+'deg)');
-		$(id).css('-moz-transform', 'rotate('+angle+'deg) scale(0)');
+		$(id).css('-webkit-transform', 'rotate('+rotate_angle+'deg)');
+		$(id).css('-moz-transform', 'rotate('+rotate_angle+'deg) scale(0)');
 		$(id).css('zoom', 0);
 		$(id).css('display', 'block');
 		
@@ -80,7 +84,7 @@ function particlejs(opts) {
 			
 			// zoom in with age
 			$(id).css('zoom', (age/20));
-			$(id).css('-moz-transform', 'rotate('+angle+'deg) scale('+(age/20)+')');
+			$(id).css('-moz-transform', 'rotate('+rotate_angle+'deg) scale('+(age/20)+')');
 			// speed up with age
 			speed *= 1.1;
 
