@@ -1,12 +1,19 @@
 function particlejs(opts) {
+	// create the container
+	//$('html, body').append('<div id="particlejs" style="position:fixed;top:0;left:0;width:'+$(window).width()+';height:'+$(window).height()+';"></div>');
+	
+	$('body').css('overflow', 'hidden');
+	$('body').animate({scrollTop:'0px'}, 200); 
+	
+	var screen_width = $(window).width();
+	var screen_height = $(window).height();
+
 	// a single particle
 	function particle(opts){
 		var id = '#particlejs-'+opts.id;
 		var age = 0;
 		var speed = 10+Math.random()*10;
 		var angle = Math.random()*360;
-		var screen_width = $(window).width();
-		var screen_height = $(window).height();
 		var x = screen_width/2;
 		var y = screen_height/2;
 		
