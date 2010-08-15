@@ -57,9 +57,9 @@ function particlejs(opts) {
 
 			// make sure it's still on the screen
 			var on_the_screen = true;
-			if(newpos.left < 0 || newpos.top < 0) on_the_screen = false;
-			if(newpos.left >= $(window).width()) on_the_screen = false;
-			if(newpos.top  >= $(window).height()) on_the_screen = false;
+			if(newpos.left < -100 || newpos.top < -100) on_the_screen = false;
+			if(newpos.left >= $(window).width() + 100) on_the_screen = false;
+			if(newpos.top  >= $(window).height() + 100) on_the_screen = false;
 			if(on_the_screen) {
 				return true;
 			} else {
@@ -74,28 +74,27 @@ function particlejs(opts) {
 
 	// launch a particle
 	this.launch = function() {
-		var hex_digits = ['6','7','8','9','a','b','c','d','e','f'];
+		var hex_digits = ['2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
 		var color = '#';
-		for(var i=0; i<6; i++)
-			color += hex_digits[Math.floor(Math.random()%hex_digits.length)];
+		for(var i=0; i<6; i++) {
+			var random_element = Math.ceil(Math.random()*hex_digits.length);
+			color += hex_digits[random_element];
+		}
 		particles.push(new particle({
 			id: particle_count,
 			width: 100,
 			height: 100,
-			//html: '<img src="http://www.textually.org/tv/archives/images/set3/test-pattern-clock_4767.jpg" style="width:100px;height:100px;" />'
 			html: '<h1 style="color:'+color+'">'+particle_count+'</h1>'
 		}));
 		particle_count++;
 	}
 
-	// launch a 5 times a second
-	setInterval(function(){
-		var count = Math.floor(Math.random()*10);
-		for(var i=0; i<count; i++) this.launch();
-	}, 100);
-
+	
 	// update loop
+	var going_strong = true;
 	this.update_loop = function() {
+		if(particles.length == 0 && !going_strong) return;
+
 		var to_remove = [];
 		// update all the particles
 		for(var i in particles) {
@@ -113,9 +112,21 @@ function particlejs(opts) {
 			particles.splice(to_remove[i-removed], 1);
 			removed++;
 		}
-		setTimeout(this.update_loop, 10);
+		update_loop_interval = setTimeout(this.update_loop, 10);
 	}
-
-	// run the update loop
 	this.update_loop();
+	
+	// launch a 5 times a second
+	var launch_interval = setInterval(function(){
+		var count = Math.floor(Math.random()*5);
+		for(var i=0; i<count; i++) this.launch();
+	}, 100);
+
+	// if there's a duration, stop everything then
+	if(opts.duration) {
+		setTimeout(function(){
+			clearInterval(launch_interval);
+			going_strong = false;
+		}, opts.duration);
+	}	
 }
