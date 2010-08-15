@@ -4,8 +4,54 @@
 		<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
 		<script type="text/javascript" src="particlejs.js"></script>
 		<script type="text/javascript">
-			$(document).click(function(){
-				particlejs({ duration:10000 });
+			$(function(){
+				function twitter_profile_images() {
+					particlejs({
+						duration: 10000,
+						elements: [
+							'<img style="width:100px;height:100px;" src="http://a0.twimg.com/profile_images/1102565564/00000033445558_normal.jpg" />',
+							'<img style="width:100px;height:100px;" src="http://a0.twimg.com/profile_images/1102000484/IMG_2607_normal.jpg" />',
+							'<img style="width:100px;height:100px;" src="http://a1.twimg.com/profile_images/1103698581/ItstheteenlifeBITCH_normal.png" />',
+							'<img style="width:100px;height:100px;" src="http://a1.twimg.com/profile_images/740593245/image_normal.jpg" />',
+							'<img style="width:100px;height:100px;" src="http://a0.twimg.com/profile_images/1097760676/FAEgeg_normal.png" />',
+							'<img style="width:100px;height:100px;" src="http://a1.twimg.com/profile_images/1099335121/dp_normal.png" />',
+							'<img style="width:100px;height:100px;" src="http://a1.twimg.com/profile_images/912836429/p2_normal.png" />',
+							'<img style="width:100px;height:100px;" src="http://a3.twimg.com/profile_images/841814099/libra-sign-stencil_normal.gif" />',
+							'<img style="width:100px;height:100px;" src="http://a0.twimg.com/profile_images/284633232/gary_normal.jpg" />',
+							'<img style="width:100px;height:100px;" src="http://a0.twimg.com/profile_images/1003065832/ICONATOR_dfdb1340c6e78f704f071b34bbdba996_normal.jpg" />',
+							'<img style="width:100px;height:100px;" src="http://a3.twimg.com/profile_images/792221815/Angry_batman_normal.JPG" />',
+							'<img style="width:100px;height:100px;" src="http://a2.twimg.com/profile_images/1099782022/Justin-Bieber-Icon-justin-bieber-14482058-100-100_normal.jpg" />'
+						],
+						width: 100,
+						height: 100
+					});
+				}
+				
+				function twitter_tweets() {
+					particlejs({
+						duration: 10000,
+						elements: [
+							'<h1 style="color:white">Thanks to all who let us know that http://bit.ly/cZV8ul was down. It\'s back up (restart), and we\'re investigating. Got Hoptoad on it.:-)</h1>',
+							'<h1 style="color:white">At outside lands, drinking a beer with @broodman. Who\'s here?</h1>',
+							'<h1 style="color:white">What the fuck are you still doing driving a cab? http://bit.ly/bhaymU</h1>',
+							'<h1 style="color:white">Scott Berkun joins Automattic as team lead on wordpress.com, http://bit.ly/cpINoZ</h1>',
+							'<h1 style="color:white">All this is is Racism, at its finest. http://yfrog.com/mus86lj</h1>',
+							'<h1 style="color:white">A quick overview of what we\'re cooking up @katalysthq - http://youtu.be/DrS4Y-UCCvI</h1>',
+							'<h1 style="color:white">New page is up revealing an old payphone trick that used to really exist... http://bit.ly/cWozea</h1>',
+							'<h1 style="color:white">RT @dmolnar @mediapathic world unification pales next to the power of our fully armed and operational static analysis infrastructure!</h1>',
+							'<h1 style="color:white">So long story short, BoA fucked me over and I need a new bank. Any suggestions?</h1>',
+							'<h1 style="color:white">The only reason we aren\'t hearing about India/UAE wanting to block iPhones and Android phones too is b/c they can already monitor them</h1>',
+							'<h1 style="color:white">Holy cute sloths! http://bit.ly/cVfftq (4 minutes long)</h1>',
+							'<h1 style="color:white">Was kind of hoping the guy would drive down in to the MUNI tunnel.</h1>',
+							'<h1 style="color:white">Hacker Uses XSS and Google Street View Data to Determine Physical Location http://bit.ly/dl95AU (http://bit.ly/aynRyK)</h1>'
+						],
+						width: 500,
+						height: 100,
+						speed: 2
+					});
+				}
+
+				twitter_tweets();
 			});
 		</script>
 		<style>

@@ -1,12 +1,18 @@
+/********************************************
+ * ParticleJS - a div-based particle system
+ * http://github.com/micahflee/particlejs
+ ********************************************/
+
 function particlejs(opts) {
 	// create the container
-	//$('html, body').append('<div id="particlejs" style="position:fixed;top:0;left:0;width:'+$(window).width()+';height:'+$(window).height()+';"></div>');
-	
 	$('body').css('overflow', 'hidden');
 	$('body').animate({scrollTop:'0px'}, 200); 
 	
 	var screen_width = $(window).width();
 	var screen_height = $(window).height();
+	var element_width = opts.width || 100;
+	var element_height = opts.height || 100;
+	var speed_factor = opts.speed || 1;
 
 	// a single particle
 	function particle(opts){
@@ -40,8 +46,8 @@ function particlejs(opts) {
 			if(destroyed) return;
 			
 			// zoom in with age
-			$(id).css('zoom', (0.1+age/20));
-			$(id).css('-moz-transform', 'rotate('+angle+'deg) scale('+(0.1+age/20)+')');
+			$(id).css('zoom', (age/20));
+			$(id).css('-moz-transform', 'rotate('+angle+'deg) scale('+(age/20)+')');
 			// speed up with age
 			speed *= 1.1;
 
@@ -49,8 +55,8 @@ function particlejs(opts) {
 			function to_degrees(radians) { return ((radians * 180 / Math.PI)+360)%360; }
 
 			// calculate the movement
-			var xinc = speed*Math.cos(to_radians(angle));
-			var yinc = speed*Math.sin(to_radians(angle));
+			var xinc = speed_factor*speed*Math.cos(to_radians(angle));
+			var yinc = speed_factor*speed*Math.sin(to_radians(angle));
 			var pos = $(id).offset();
 			var newpos = {
 				left: pos.left + xinc,
@@ -82,20 +88,28 @@ function particlejs(opts) {
 	// launch a particle
 	var particle_count = 0;
 	var launch = function() {
-		// pick a color
-		var hex_digits = ['2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
-		var color = '#';
-		for(var i=0; i<6; i++) {
-			var random_element = Math.ceil(Math.random()*hex_digits.length);
-			color += hex_digits[random_element];
-		}
+		var html = '';
 
+		if(!opts.elements) {
+			// if elements weren't passed in, use the current id of a random color
+			var hex_digits = ['2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
+			var color = '#';
+			for(var i=0; i<6; i++) {
+				var random_element = Math.ceil(Math.random()*hex_digits.length);
+				color += hex_digits[random_element];
+			}
+			html = '<h1 style="color:'+color+'">'+particle_count+'</h1>';
+		} else {
+			// pick a random element
+			html = opts.elements[Math.floor(Math.random()*opts.elements.length)];
+		}
+		
 		// create a new particle
 		new particle({
 			id: particle_count,
-			width: 100,
-			height: 100,
-			html: '<h1 style="color:'+color+'">'+particle_count+'</h1>'
+			width: element_width,
+			height: element_height,
+			html: html
 		});
 		particle_count++;
 	}
