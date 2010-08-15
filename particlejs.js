@@ -1,4 +1,4 @@
-function starfield(opts) {
+function particlejs(opts) {
 	// a single particle
 	var particle = function(opts){
 		this.id = '#starfield-particle-'+opts.id;
@@ -70,5 +70,28 @@ function starfield(opts) {
 		particle_count++;
 	}
 
+	// launch a 5 times a second
+	setInterval('launch()', 200);
 
+	// update loop
+	function update_loop() {
+		var to_remove = [];
+		// update all the particles
+		for(var i in particles) {
+			if(particles[i]) {
+				if(!particles[i].update()) {
+					to_remove.append(i);
+				}
+			}
+		}
+		// remove any that are off the screen
+		removed = 0;
+		for(var i in to_remove) {
+			particles.splice(to_remove[i-removed], 1);
+			removed++;
+		}
+	}
+
+	// run the update loop
+	setInterval('update_loop()', 10);
 }
